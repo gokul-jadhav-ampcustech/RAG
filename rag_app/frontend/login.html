@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SmartRAG — Login</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg-base: #FFFFFF; --bg-surface: #FFF8F2; --bg-elevated: #FFF1E6;
+  --bg-border: rgba(251,146,60,0.18);
+  --purple: #FB923C; --purple-light: #F97316; --indigo: #FDBA74;
+  --text-primary: #1C1917; --text-secondary: #44403C; --text-muted: #A8A29E;
+  --green: #10B981; --red: #EF4444;
+  --font: 'Inter', system-ui, sans-serif;
+}
+html, body { height: 100%; font-family: var(--font); background: var(--bg-base); color: var(--text-primary); -webkit-font-smoothing: antialiased; }
+
+.login-shell {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: radial-gradient(ellipse at 50% 0%, rgba(249,115,22,0.15) 0%, transparent 60%);
+}
+
+.login-card {
+  width: 100%;
+  max-width: 400px;
+  background: var(--bg-surface);
+  border: 1px solid var(--bg-border);
+  border-radius: 20px;
+  padding: 40px 36px;
+  box-shadow: 0 24px 64px rgba(251,146,60,0.12);
+}
+
+.login-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 28px;
+  justify-content: center;
+}
+
+.login-logo svg { width: 40px; height: 40px; filter: drop-shadow(0 4px 12px rgba(249,115,22,0.5)); }
+
+.login-logo-text h1 {
+  font-size: 20px; font-weight: 700;
+  background: linear-gradient(135deg, #FDBA74, #F97316);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.login-logo-text span { font-size: 12px; color: var(--text-muted); }
+
+.login-title { font-size: 22px; font-weight: 700; text-align: center; margin-bottom: 6px; }
+.login-sub { font-size: 13px; color: var(--text-secondary); text-align: center; margin-bottom: 28px; }
+
+.form-group { margin-bottom: 16px; }
+.form-label { display: block; font-size: 13px; font-weight: 500; color: var(--text-secondary); margin-bottom: 6px; }
+
+.form-input {
+  width: 100%;
+  padding: 11px 14px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--bg-border);
+  border-radius: 10px;
+  color: var(--text-primary);
+  font-family: var(--font);
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.form-input:focus {
+  border-color: rgba(249,115,22,0.5);
+  box-shadow: 0 0 0 3px rgba(249,115,22,0.1);
+}
+.form-input::placeholder { color: var(--text-muted); }
+
+.btn-login {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(135deg, #F97316, #EA580C);
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: var(--font);
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+.btn-login:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(249,115,22,0.4); }
+.btn-login:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.divider {
+  display: flex; align-items: center; gap: 12px;
+  margin: 24px 0;
+  color: var(--text-muted); font-size: 12px;
+}
+.divider::before, .divider::after {
+  content: ''; flex: 1; height: 1px; background: var(--bg-border);
+}
+
+.demo-card {
+  background: var(--bg-elevated);
+  border: 1px solid rgba(249,115,22,0.2);
+  border-radius: 12px;
+  padding: 16px;
+}
+.demo-title { font-size: 12px; font-weight: 600; color: #FDBA74; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
+.demo-creds { font-size: 13px; color: var(--text-secondary); margin-bottom: 12px; line-height: 1.8; }
+.demo-creds code { background: rgba(255,255,255,0.06); padding: 1px 6px; border-radius: 4px; font-family: monospace; color: var(--text-primary); }
+
+.btn-demo {
+  width: 100%;
+  padding: 10px;
+  background: rgba(249,115,22,0.12);
+  border: 1px solid rgba(249,115,22,0.3);
+  border-radius: 8px;
+  color: #FDBA74;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: var(--font);
+  transition: all 0.2s;
+}
+.btn-demo:hover { background: rgba(249,115,22,0.2); border-color: rgba(249,115,22,0.5); }
+
+.error-msg {
+  background: rgba(239,68,68,0.1);
+  border: 1px solid rgba(239,68,68,0.25);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 13px;
+  color: var(--red);
+  margin-bottom: 16px;
+  display: none;
+}
+.error-msg.show { display: block; }
+
+.spinner {
+  width: 16px; height: 16px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  display: none;
+}
+.spinner.show { display: inline-block; }
+@keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+<div class="login-shell">
+  <div class="login-card">
+    <div class="login-logo">
+      <svg viewBox="0 0 36 36" fill="none">
+        <circle cx="18" cy="18" r="18" fill="url(#lg1)"/>
+        <path d="M10 24L18 10L26 24" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="18" cy="20" r="3" fill="#fff"/>
+        <defs>
+          <linearGradient id="lg1" x1="0" y1="0" x2="36" y2="36">
+            <stop stop-color="#F97316"/><stop offset="1" stop-color="#EA580C"/>
+          </linearGradient>
+        </defs>
+      </svg>
+      <div class="login-logo-text">
+        <h1>SmartRAG</h1>
+        <span>Document Intelligence</span>
+      </div>
+    </div>
+
+    <h2 class="login-title">Welcome back</h2>
+    <p class="login-sub">Sign in to your account to continue</p>
+
+    <div class="error-msg" id="error-msg"></div>
+
+    <form id="login-form">
+      <div class="form-group">
+        <label class="form-label" for="username">Username</label>
+        <input class="form-input" type="text" id="username" placeholder="Enter username" autocomplete="username" required />
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="password">Password</label>
+        <input class="form-input" type="password" id="password" placeholder="Enter password" autocomplete="current-password" required />
+      </div>
+      <button type="submit" class="btn-login" id="login-btn">
+        <span class="spinner" id="login-spinner"></span>
+        <span id="login-btn-text">Sign In</span>
+      </button>
+    </form>
+
+    <div class="divider">Demo Account</div>
+
+    <div class="demo-card">
+      <div class="demo-title">🚀 Try the Demo</div>
+      <div class="demo-creds">
+        Username: <code>demo</code><br>
+        Password: <code>demo123</code>
+      </div>
+      <button class="btn-demo" id="demo-btn">Login as Demo</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const API_BASE = window.location.port === '3000'
+  ? `${window.location.protocol}//${window.location.hostname}:8003`
+  : window.location.origin;
+
+async function doLogin(username, password) {
+  const btn = document.getElementById('login-btn');
+  const spinner = document.getElementById('login-spinner');
+  const btnText = document.getElementById('login-btn-text');
+  const errorMsg = document.getElementById('error-msg');
+
+  btn.disabled = true;
+  spinner.classList.add('show');
+  btnText.textContent = 'Signing in…';
+  errorMsg.classList.remove('show');
+
+  try {
+    const resp = await fetch(`${API_BASE}/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password }),
+    });
+
+    if (resp.ok) {
+      const data = await resp.json();
+      localStorage.setItem('token', data.access_token);
+      localStorage.setItem('user', JSON.stringify(data.user));
+      localStorage.setItem('session_id', data.session_id);
+      window.location.href = '/';
+    } else {
+      const err = await resp.json().catch(() => ({ detail: 'Login failed' }));
+      errorMsg.textContent = err.detail || 'Invalid credentials';
+      errorMsg.classList.add('show');
+    }
+  } catch {
+    errorMsg.textContent = 'Connection error. Is the server running?';
+    errorMsg.classList.add('show');
+  } finally {
+    btn.disabled = false;
+    spinner.classList.remove('show');
+    btnText.textContent = 'Sign In';
+  }
+}
+
+document.getElementById('login-form').addEventListener('submit', e => {
+  e.preventDefault();
+  const username = document.getElementById('username').value.trim();
+  const password = document.getElementById('password').value;
+  if (username && password) doLogin(username, password);
+});
+
+document.getElementById('demo-btn').addEventListener('click', () => {
+  document.getElementById('username').value = 'demo';
+  document.getElementById('password').value = 'demo123';
+  doLogin('demo', 'demo123');
+});
+</script>
+</body>
+</html>
